@@ -24,7 +24,7 @@ func NewAverager(size int) *Averager {
 		size = defaultRingSize
 	}
 	return &Averager{
-		r: ring.New(defaultRingSize),
+		r: ring.New(size),
 	}
 }
 
