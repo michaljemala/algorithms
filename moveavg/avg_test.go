@@ -8,18 +8,18 @@ import (
 )
 
 func TestMoveAvg(t *testing.T) {
-	for _, tc := range []struct{
-		name           string
+	for _, tc := range []struct {
+		name       string
 		buffSize   int
 		data       []float64
 		windowSize int
 		result     float64
 		errFunc    func(*testing.T, error)
-	} {
+	}{
 		{
-			name: "not enough captured items",
-			buffSize: 50,
-			data: []float64{1.0, 1.3, 1.2, 1.4, 1.9},
+			name:       "not enough captured items",
+			buffSize:   50,
+			data:       []float64{1.0, 1.3, 1.2, 1.4, 1.9},
 			windowSize: 10,
 			errFunc: func(t *testing.T, err error) {
 				if err != moveavg.ErrNotEnoughValues {
@@ -28,8 +28,8 @@ func TestMoveAvg(t *testing.T) {
 			},
 		},
 		{
-			name: "too big window size",
-			buffSize: 10,
+			name:       "too big window size",
+			buffSize:   10,
 			windowSize: 50,
 			errFunc: func(t *testing.T, err error) {
 				if err != moveavg.ErrWindowTooBig {
@@ -38,10 +38,10 @@ func TestMoveAvg(t *testing.T) {
 			},
 		},
 		{
-			name: "incorrect input items",
+			name:     "incorrect input items",
 			buffSize: 10,
 			data: []float64{
-				math.NaN(), math.NaN(), math.NaN(), math.NaN(),math.NaN(),
+				math.NaN(), math.NaN(), math.NaN(), math.NaN(), math.NaN(),
 			},
 			windowSize: 5,
 			errFunc: func(t *testing.T, err error) {
@@ -51,7 +51,7 @@ func TestMoveAvg(t *testing.T) {
 			},
 		},
 		{
-			name: "invalid window",
+			name:     "invalid window",
 			buffSize: 50,
 			data: []float64{
 				1.0, 1.3, 1.2, 1.4, 1.9,
@@ -65,7 +65,7 @@ func TestMoveAvg(t *testing.T) {
 			},
 		},
 		{
-			name: "correct moving average",
+			name:     "correct moving average",
 			buffSize: 50,
 			data: []float64{
 				1.0, 1.3, 1.2, 1.4, 1.9,
@@ -73,7 +73,7 @@ func TestMoveAvg(t *testing.T) {
 				1.1, 1.1, 1.5, 1.4, 1.0,
 			},
 			windowSize: 10,
-			result: 1.32,
+			result:     1.32,
 		},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
@@ -97,5 +97,5 @@ func TestMoveAvg(t *testing.T) {
 
 func float64Equals(a, b float64) bool {
 	const threshold = 1e-9
-	return math.Abs(a - b) <= threshold
+	return math.Abs(a-b) <= threshold
 }
